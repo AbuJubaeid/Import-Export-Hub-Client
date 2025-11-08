@@ -8,7 +8,7 @@ const Layout = () => {
             <div>
                 <Navbar></Navbar>
             </div>
-            <div>
+            <div className="px-15">
                 <Outlet></Outlet>
             </div>
             <div>
