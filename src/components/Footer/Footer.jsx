@@ -7,7 +7,7 @@ const Footer = () => {
   return (
     <div>
       <footer className="bg-base-200 text-base-content">
-        <div className="footer sm:footer-horizontal text-base-content p-10">
+        <div className="footer sm:footer-horizontal text-base-content p-5">
           <aside>
             <img className="w-[30px] h-[30px]" src="/logo.ico" alt="" />
             <p>
@@ -44,7 +44,7 @@ const Footer = () => {
             </div>
           </nav>
         </div>
-        <p className="text-center mb-5">
+        <p className="text-center pb-2">
           Copyright © {new Date().getFullYear()} - All right reserved IEHub
         </p>
       </footer>
