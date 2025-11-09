@@ -5,6 +5,7 @@ import AllProducts from "../components/AllProducts/AllProducts";
 import Home from "../components/Home/Home";
 import MyExports from "../components/MyExports/MyExports";
 import MyImports from "../components/MyImports/MyImports";
+import Signup from "../components/Signup/Signup";
 
 
 const router = createBrowserRouter([
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
         {
             path: '/addProducts',
             Component: AddProducts
+        },
+        {
+            path: '/signup',
+            Component: Signup
         },
     ]
   },
