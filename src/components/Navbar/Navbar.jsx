@@ -1,6 +1,24 @@
+import { useContext } from "react";
+import toast from "react-hot-toast";
 import { Link, NavLink } from "react-router";
+import { PuffLoader } from "react-spinners";
+import { AuthContext } from "../../AuthContext/AuthContext";
 
 const Navbar = () => {
+
+  const {user, setUser, signOutFunc, loading} = useContext(AuthContext)
+
+  const handleSignout = () => {
+      signOutFunc()
+        .then(() => {
+          toast.success("Signout successfull");
+          setUser(null);
+        })
+        .catch((error) => {
+          toast.error(error.message);
+        });
+    };
+
   const links = (
     <>
       <li>
@@ -92,9 +110,42 @@ const Navbar = () => {
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">{links}</ul>
       </div>
-      <div className="navbar-end">
-        <Link to="/signin" className="text-blue-600 font-semibold hover:underline">Login</Link>
-      </div>
+      <div  className="navbar-end">
+              {loading ? <PuffLoader /> :user ? (
+                <div className="text-center space-y-3 ">
+                  <button
+                    className=""
+                    popoverTarget="popover-1"
+                    style={{ anchorName: "--anchor-1" }}
+                  >
+                    <img
+                      src={user?.photoURL || "https://via.placeholder.com/88"}
+                      className="h-[40px] w-[40px] rounded-full mx-auto"
+                      alt=""
+                    />
+                  </button>
+      
+                  <div
+                    className="dropdown menu w-25 rounded-box bg-base-100 shadow-sm"
+                    popover="auto"
+                    id="popover-1"
+                    style={
+                      { positionAnchor: "--anchor-1" }}
+                  >
+                    <h2 className="text-xl font-semibold">{user?.displayName}</h2>
+                    <button onClick={handleSignout} className="my-btn text-blue-600 cursor-pointer">
+                      Sign Out
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <div>
+                  <Link to="/signin" className="text-xl text-blue-600">
+                    Login
+                  </Link>
+                </div>
+              )}
+            </div>
     </div>
   );
 };
