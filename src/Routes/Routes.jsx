@@ -5,6 +5,7 @@ import AllProducts from "../components/AllProducts/AllProducts";
 import Home from "../components/Home/Home";
 import MyExports from "../components/MyExports/MyExports";
 import MyImports from "../components/MyImports/MyImports";
+import Signin from "../components/Signin/Signin";
 import Signup from "../components/Signup/Signup";
 
 
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
         {
             path: '/signup',
             Component: Signup
+        },
+        {
+            path: '/signin',
+            Component: Signin
         },
     ]
   },
