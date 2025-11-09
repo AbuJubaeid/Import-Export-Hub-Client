@@ -13,12 +13,12 @@ const Signup = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const name = e.target.name.value;
+    const displayName = e.target.name.value;
     const photoURL = e.target.photoURL.value;
     const email = e.target.email.value;
     const password = e.target.password.value;
 
-    const newUser = { name, email, photoURL, password };
+    const newUser = {displayName, email, photoURL, password};
 
     console.log(newUser);
 
