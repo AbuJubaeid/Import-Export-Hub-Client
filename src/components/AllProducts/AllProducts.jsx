@@ -3,7 +3,6 @@ import ProductsCard from "../ProductsCard/ProductsCard";
 
 const AllProducts = () => {
     const products = useLoaderData()
-    console.log(products)
     return (
         <div>
             <div className="grid grid-cols-3 gap-4 mt-10 mb-10">

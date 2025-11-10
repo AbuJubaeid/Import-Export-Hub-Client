@@ -25,6 +25,11 @@ const router = createBrowserRouter([
             loader: ()=> fetch("http://localhost:3000/products")
         },
         {
+            path: '/product/:product._id',
+            Component: AllProducts,
+            loader: ({params})=> fetch(`http://localhost:3000/products/${params._id}`)
+        },
+        {
             path: '/myExports',
             element: <PrivateRoute><MyExports></MyExports></PrivateRoute>
         },
