@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { IoIosEyeOff } from "react-icons/io";
 import { RxEyeOpen } from "react-icons/rx";
@@ -7,8 +7,9 @@ import { AuthContext } from "../../AuthContext/AuthContext";
 
 const Signin = () => {
   const [show, setShow] = useState(false);
-  const { signInWithEmailAndPasswordFunc, signInWithPopupFunc } = useContext(AuthContext);
+  const { signInWithEmailAndPasswordFunc, signInWithPopupFunc, sendPasswordResetEmailFunc } = useContext(AuthContext);
   const navigate = useNavigate();
+   const emailRef = useRef(null)
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -67,6 +68,18 @@ const Signin = () => {
       });
   }
 
+  const handleForgetButton =()=>{
+    const email = emailRef.current.value
+
+    sendPasswordResetEmailFunc(email)
+    .then(result=>{
+        console.log(result)
+        toast("Check your email to reset password")
+    })
+
+  }
+
+
   return (
     <div className="hero bg-base-200 min-h-screen mt-10 mb-10">
       <div className="hero-content flex-col lg:flex-row-reverse">
@@ -81,6 +94,7 @@ const Signin = () => {
               <input
                 type="email"
                 name="email"
+                ref={emailRef}
                 className="input"
                 placeholder="Enter your email"
               />
@@ -101,7 +115,7 @@ const Signin = () => {
                 </span>
               </div>
               <div>
-                <a className="link link-hover">Forgot password?</a>
+                <button onClick={handleForgetButton} type="button" className="link link-hover">Forgot password?</button>
               </div>
               <button className="btn btn-neutral mt-4">Login</button>
             </fieldset>
