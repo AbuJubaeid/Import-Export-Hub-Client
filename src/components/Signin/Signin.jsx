@@ -66,7 +66,7 @@ const Signin = () => {
         toast.error(error.message);
       });
   }
-  
+
   return (
     <div className="hero bg-base-200 min-h-screen mt-10 mb-10">
       <div className="hero-content flex-col lg:flex-row-reverse">
