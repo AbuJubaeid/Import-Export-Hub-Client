@@ -7,7 +7,7 @@ import { AuthContext } from "../../AuthContext/AuthContext";
 
 const Signup = () => {
   const [show, setShow] = useState(false);
-  const { createUserWithEmailAndPasswordFunc, updateProfileFunc } =
+  const { createUserWithEmailAndPasswordFunc, updateProfileFunc, setLoading, signOutFunc, setUser } =
     useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -36,9 +36,18 @@ const Signup = () => {
       .then((result) => {
         console.log(result);
         updateProfileFunc(displayName, photoURL).then((result) => {
-          console.log(result);
+            signOutFunc()
+        .then(() => {
+            console.log(result);
+          setLoading(false)
           toast.success("Registration successful");
-          navigate("/");
+          navigate("/"); 
+          setUser(null);
+        })
+        .catch((error) => {
+          toast.error(error.message);
+        });
+          
         })
         .catch(error=>{
             toast.error(error.message)

@@ -7,7 +7,7 @@ import { AuthContext } from "../../AuthContext/AuthContext";
 
 const Signin = () => {
   const [show, setShow] = useState(false);
-  const { signInWithEmailAndPasswordFunc, signInWithPopupFunc, sendPasswordResetEmailFunc } = useContext(AuthContext);
+  const { signInWithEmailAndPasswordFunc, signInWithPopupFunc, sendPasswordResetEmailFunc, setLoading } = useContext(AuthContext);
   const navigate = useNavigate();
    const emailRef = useRef(null)
 
@@ -17,13 +17,12 @@ const Signin = () => {
     const email = e.target.email.value;
     const password = e.target.password.value;
 
-    const user = { email, password };
-    console.log(user);
 
     signInWithEmailAndPasswordFunc(email, password)
       .then((result) => {
         console.log(result);
         navigate("/");
+        setLoading(false)
         toast.success("Login successful");
       })
       .catch((error) => {
@@ -60,6 +59,7 @@ const Signin = () => {
     .then(result=>{
         console.log(result)
         navigate("/");
+        setLoading(false)
         toast.success("Login successful");
     })
     .catch((error) => {
@@ -74,6 +74,7 @@ const Signin = () => {
     sendPasswordResetEmailFunc(email)
     .then(result=>{
         console.log(result)
+        setLoading(false)
         toast("Check your email to reset password")
     })
 

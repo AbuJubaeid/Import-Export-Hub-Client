@@ -45,7 +45,7 @@ const Footer = () => {
           </nav>
         </div>
         <p className="text-center pb-2">
-          Copyright © {new Date().getFullYear()} - All right reserved IEHub
+          <small>Copyright © {new Date().getFullYear()} - All right reserved IEHub</small>
         </p>
       </footer>
     </div>

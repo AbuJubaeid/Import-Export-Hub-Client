@@ -42,7 +42,10 @@ const Navbar = () => {
           All Products
         </NavLink>
       </li>
-      <li>
+      {
+        user && 
+        <>
+        <li>
         <NavLink
           className={({ isActive }) =>
             isActive ? "active-link" : "inactive-link"
@@ -72,6 +75,8 @@ const Navbar = () => {
           Add Products
         </NavLink>
       </li>
+        </>
+      }
     </>
   );
 

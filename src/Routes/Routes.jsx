@@ -1,5 +1,4 @@
 import { createBrowserRouter } from "react-router";
-import Layout from "../Layout/Layout";
 import AddProducts from "../components/AddProducts/AddProducts";
 import AllProducts from "../components/AllProducts/AllProducts";
 import Home from "../components/Home/Home";
@@ -7,6 +6,8 @@ import MyExports from "../components/MyExports/MyExports";
 import MyImports from "../components/MyImports/MyImports";
 import Signin from "../components/Signin/Signin";
 import Signup from "../components/Signup/Signup";
+import Layout from "../Layout/Layout";
+import PrivateRoute from "../PrivateRoute/PrivateRoute";
 
 
 const router = createBrowserRouter([
@@ -24,15 +25,15 @@ const router = createBrowserRouter([
         },
         {
             path: '/myExports',
-            Component: MyExports
+            element: <PrivateRoute><MyExports></MyExports></PrivateRoute>
         },
         {
             path: '/myImports',
-            Component: MyImports
+            element: <PrivateRoute><MyImports></MyImports></PrivateRoute>
         },
         {
             path: '/addProducts',
-            Component: AddProducts
+            element: <PrivateRoute><AddProducts></AddProducts></PrivateRoute>
         },
         {
             path: '/signup',
