@@ -1,8 +1,30 @@
-import { useLoaderData } from "react-router";
+import { useContext, useEffect, useState } from "react";
+import { useParams } from "react-router";
+import { AuthContext } from "../../AuthContext/AuthContext";
 
 const ProductDEtails = () => {
-  const product = useLoaderData();
-  console.log(product);
+  const { id } = useParams();
+  const [product, setProduct] = useState({});
+  const [loading, setLoading] = useState(true);
+  const {user} = useContext(AuthContext)
+
+  useEffect(() => {
+    fetch(`http://localhost:3000/products/${id}`, {
+      headers: {
+        authorization: `Bearer ${user.accessToken}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setProduct(data);
+        setLoading(false);
+      });
+  }, [ id, user]);
+
+    if(loading){
+        return <div>Loading....</div>
+    }
+
   return (
     <div>
       <div className="mt-10 mb-10 max-w-3xl mx-auto bg-white shadow-lg rounded-2xl overflow-hidden hover:shadow-2xl transition-all duration-300 flex flex-col md:flex-row">
