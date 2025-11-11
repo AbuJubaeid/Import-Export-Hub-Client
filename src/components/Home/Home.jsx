@@ -1,6 +1,11 @@
+import { useLoaderData } from "react-router";
+import ProductsCard from "../ProductsCard/ProductsCard";
+
 const Home = () => {
+  const products = useLoaderData()
   return (
     <div>
+      {/* slider */}
       <section className="mt-10">
         <div className="carousel w-full">
           <div id="slide1" className="carousel-item relative w-full">
@@ -61,6 +66,13 @@ const Home = () => {
           </div>
         </div>
       </section>
+
+      {/* most recent products */}
+      <div className="grid grid-cols-3 gap-4 mt-10 mb-10">
+          {
+            products.map(product=> <ProductsCard key={product._id} product={product}></ProductsCard>)
+          }
+      </div>
     </div>
   );
 };

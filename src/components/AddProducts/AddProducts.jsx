@@ -1,3 +1,5 @@
+import toast from "react-hot-toast";
+
 const AddProducts = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -22,6 +24,9 @@ const AddProducts = () => {
     .then(res=>res.json())
     .then(data=>{
         console.log("after post data", data)
+        if(data.acknowledged){
+            toast("Product added successfully")
+        }
     })
     .catch(error=>{
         console.log(error)
