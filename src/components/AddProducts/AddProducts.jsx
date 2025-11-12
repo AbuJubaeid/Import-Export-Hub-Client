@@ -1,6 +1,13 @@
+import { useContext } from "react";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router";
+import { AuthContext } from "../../AuthContext/AuthContext";
 
 const AddProducts = () => {
+
+    const {user} = useContext(AuthContext)
+    const navigate = useNavigate()
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -12,6 +19,7 @@ const AddProducts = () => {
       rating: e.target.rating.value,
       available_quantity: e.target.available_quantity.value,
       description: e.target.description.value,
+      created_by: user.email
     };
     console.log(formData)
     fetch('http://localhost:3000/products', {
@@ -25,8 +33,9 @@ const AddProducts = () => {
     .then(data=>{
         console.log("after post data", data)
         if(data.acknowledged){
-            toast("Product added successfully")
+            toast.success("Product added successfully")
         }
+        navigate('/myExports')
     })
     .catch(error=>{
         console.log(error)
