@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { Link, NavLink } from "react-router";
 import { PuffLoader } from "react-spinners";
@@ -7,6 +7,18 @@ import { AuthContext } from "../../AuthContext/AuthContext";
 const Navbar = () => {
 
   const {user, setUser, signOutFunc, loading} = useContext(AuthContext)
+    const [theme, setTheme] = useState(localStorage.getItem('theme') || "light")
+
+  useEffect(() => {
+    const html = document.querySelector('html')
+     html.setAttribute("data-theme", theme)
+     localStorage.setItem("theme", theme)
+  }, [theme])
+
+
+  const handleTheme = (checked) => {
+    setTheme(checked ? "dark": "light")
+  }
 
   const handleSignout = () => {
       signOutFunc()
@@ -138,6 +150,14 @@ const Navbar = () => {
                       { positionAnchor: "--anchor-1" }}
                   >
                     <h2 className="text-xl font-semibold">{user?.displayName}</h2>
+                    <p>------------</p>
+                    {/* theme */}
+                    <input
+                    onChange={(e)=> handleTheme(e.target.checked)}
+                    type="checkbox"
+                    defaultChecked={localStorage.getItem('theme') === "dark"}
+                    className="toggle"/>
+                    {/*  */}
                     <button onClick={handleSignout} className="my-btn text-blue-600 cursor-pointer">
                       Sign Out
                     </button>

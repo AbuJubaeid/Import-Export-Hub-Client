@@ -5,18 +5,15 @@ import ProductsCard from "../ProductsCard/ProductsCard";
 const AllProducts = () => {
   const products = useLoaderData();
   const [product, setProduct] = useState(products)
-  const [loading, setLoading] = useState(true)
 
   const handleSearch =(e)=>{
      e.preventDefault()
     const search_text = e.target.search.value
-    setLoading(true)
 
     fetch(`http://localhost:3000/search?search=${search_text}`)
     .then(res=>res.json())
     .then(data=>{
         setProduct(data)
-        setLoading(false)
     })
   }
   return (
@@ -41,7 +38,7 @@ const AllProducts = () => {
         </svg>
         <input name="search" type="search"  placeholder="Search" />
       </label>
-      <button className="btn">{loading ? "Searching...." : "Search"}</button>
+      <button className="btn">Search</button>
      </form>
       <div className="grid grid-cols-3 gap-4 mt-10 mb-10">
         {product.map((product) => (
