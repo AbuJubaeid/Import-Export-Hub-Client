@@ -29,10 +29,22 @@ const ProductDEtails = () => {
     }
 
     const handleImport =()=>{
+      const importDetail ={
+        created_by: product.created_by,
+        product_image: product.product_image,
+        product_name: product.product_name,
+        price: product.price,
+        origin_country: product.origin_country,
+        rating: product.rating,
+        available_quantity: product.available_quantity,
+        upload_date: product.upload_date,
+        description: product.description,
+        imported_by: user.email,
+      }
       fetch("http://localhost:3000/my-imports", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({...product, imported_by: user.email})
+                body: JSON.stringify(importDetail)
               })
                 .then((res) => res.json())
                 .then((data) => {

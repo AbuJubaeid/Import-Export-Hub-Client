@@ -30,7 +30,7 @@ const MyImports = () => {
           confirmButtonText: "Yes, remove it!",
         }).then((result) => {
           if (result.isConfirmed) {
-            fetch(`http://localhost:3000/myExports/${id}`, {
+            fetch(`http://localhost:3000/myImports/${id}`, {
               method: "DELETE",
               headers: { "Content-Type": "application/json" },
             })
