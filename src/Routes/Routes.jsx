@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router";
 import AddProducts from "../components/AddProducts/AddProducts";
 import AllProducts from "../components/AllProducts/AllProducts";
 import Home from "../components/Home/Home";
+import ImportProductDetails from "../components/ImportProductDetails/ImportProductDetails";
 import MyExports from "../components/MyExports/MyExports";
 import MyImports from "../components/MyImports/MyImports";
 import ProductDEtails from "../components/ProductDetails/ProductDEtails";
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
         {
             path: '/product/:id',
             element: <PrivateRoute><ProductDEtails></ProductDEtails></PrivateRoute> ,
+        },
+        {
+            path: '/importedProduct/:id',
+            element: <PrivateRoute><ImportProductDetails></ImportProductDetails></PrivateRoute> ,
         },
         {
             path: '/myExports',

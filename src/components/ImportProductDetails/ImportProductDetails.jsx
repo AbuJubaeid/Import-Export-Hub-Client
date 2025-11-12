@@ -1,17 +1,14 @@
 import { useContext, useEffect, useState } from "react";
-import toast from "react-hot-toast";
-import { useNavigate, useParams } from "react-router";
+import { useParams } from "react-router";
 import { AuthContext } from "../../AuthContext/AuthContext";
 
-const ProductDEtails = () => {
-  const { id } = useParams();
+const ImportProductDetails = () => {
+    const { id } = useParams();
   const [product, setProduct] = useState({});
   const [loading, setLoading] = useState(true);
   const {user} = useContext(AuthContext)
 
-  const navigate = useNavigate()
-
-  useEffect(() => {
+    useEffect(() => {
     fetch(`http://localhost:3000/products/${id}`, {
       headers: {
         authorization: `Bearer ${user.accessToken}`,
@@ -27,25 +24,8 @@ const ProductDEtails = () => {
     if(loading){
         return <div>Loading....</div>
     }
-
-    const handleImport =()=>{
-      fetch("http://localhost:3000/my-imports", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({...product, imported_by: user.email})
-              })
-                .then((res) => res.json())
-                .then((data) => {
-                  if(data.acknowledged){
-                    toast.success("Product imported successfully")
-                  }
-                  navigate('/myImports')
-                })
-                .catch((err) => console.log(err));
-    }
-
-  return (
-    <div>
+    return (
+        <div>
       <div className="mt-10 mb-10 max-w-3xl mx-auto bg-white shadow-lg rounded-2xl overflow-hidden hover:shadow-2xl transition-all duration-300 flex flex-col md:flex-row">
         {/* Left: Product Image */}
         <div className="md:w-1/2">
@@ -77,16 +57,10 @@ const ProductDEtails = () => {
               <span>📦 {product.available_quantity} pcs</span>
             </div>
           </div>
-
-          <button
-          onClick={handleImport}
-           className="mt-6 w-full bg-blue-600 text-white py-2 rounded-lg font-medium hover:bg-blue-700 transition duration-200 cursor-pointer">
-            Import Now
-          </button>
         </div>
       </div>
     </div>
-  );
+    );
 };
 
-export default ProductDEtails;
+export default ImportProductDetails;
