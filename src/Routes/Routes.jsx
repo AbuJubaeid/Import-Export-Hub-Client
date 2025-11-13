@@ -22,12 +22,12 @@ const router = createBrowserRouter([
         {
             index: true,
             Component: Home,
-            loader: ()=> fetch('http://localhost:3000/recent-products')
+            loader: ()=> fetch('https://import-export-hub-server.vercel.app/recent-products')
         },
         {
             path: '/allProducts',
             Component: AllProducts,
-            loader: ()=> fetch("http://localhost:3000/products")
+            loader: ()=> fetch("https://import-export-hub-server.vercel.app/products")
         },
         {
             path: '/product/:id',

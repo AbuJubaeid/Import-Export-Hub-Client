@@ -10,7 +10,7 @@ const MyExports = () => {
   const modalRef = useRef(null);
 
   useEffect(() => {
-    fetch(`http://localhost:3000/myExports?email=${user.email}`, {
+    fetch(`https://import-export-hub-server.vercel.app/myExports?email=${user.email}`, {
       headers: {
         "Content-Type": "application/json",
         authorization: `Bearer ${user.accessToken}`,
@@ -39,7 +39,7 @@ const MyExports = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:3000/myExports/${id}`, {
+        fetch(`https://import-export-hub-server.vercel.app/myExports/${id}`, {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
@@ -68,7 +68,7 @@ const MyExports = () => {
       available_quantity: parseInt(form.available_quantity.value),
     };
 
-    fetch(`http://localhost:3000/myExports/${selectedProduct._id}`, {
+    fetch(`https://import-export-hub-server.vercel.app/myExports/${selectedProduct._id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

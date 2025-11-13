@@ -18,7 +18,7 @@ const ProductDetails = () => {
   );
 
   useEffect(() => {
-    fetch(`http://localhost:3000/products/${id}`, {
+    fetch(`https://import-export-hub-server.vercel.app/products/${id}`, {
       headers: { authorization: `Bearer ${user.accessToken}` },
     })
       .then((res) => res.json())
@@ -42,7 +42,7 @@ const ProductDetails = () => {
       imported_quantity: parseInt(importQty),
     };
 
-    fetch("http://localhost:3000/my-imports", {
+    fetch("https://import-export-hub-server.vercel.app/my-imports", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(importDetail),

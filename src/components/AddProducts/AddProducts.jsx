@@ -21,7 +21,7 @@ const AddProducts = () => {
       created_by: user.email,
     };
 
-    fetch("http://localhost:3000/products", {
+    fetch("https://import-export-hub-server.vercel.app/products", {
       method: "POST",
       headers: {
         "content-type": "application/json",
