@@ -18,7 +18,7 @@ const ImportProductDetails = () => {
   );
 
   useEffect(() => {
-    fetch(`https://import-export-hub-server.vercel.app/products/${id}`, {
+    fetch(`http://localhost:3000/products/${id}`, {
       headers: { authorization: `Bearer ${user.accessToken}` },
     })
       .then(res => res.json())

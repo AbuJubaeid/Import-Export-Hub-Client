@@ -6,7 +6,7 @@ import Home from "../components/Home/Home";
 import ImportProductDetails from "../components/ImportProductDetails/ImportProductDetails";
 import MyExports from "../components/MyExports/MyExports";
 import MyImports from "../components/MyImports/MyImports";
-import ProductDEtails from "../components/ProductDetails/ProductDEtails";
+import ProductDetails from "../components/ProductDetails/ProductDEtails";
 import Signin from "../components/Signin/Signin";
 import Signup from "../components/Signup/Signup";
 import Layout from "../Layout/Layout";
@@ -22,16 +22,16 @@ const router = createBrowserRouter([
         {
             index: true,
             Component: Home,
-            loader: ()=> fetch('https://import-export-hub-server.vercel.app/recent-products')
+            loader: ()=> fetch('http://localhost:3000/recent-products')
         },
         {
             path: '/allProducts',
             Component: AllProducts,
-            loader: ()=> fetch("https://import-export-hub-server.vercel.app/products")
+            loader: ()=> fetch("http://localhost:3000/products")
         },
         {
             path: '/product/:id',
-            element: <PrivateRoute><ProductDEtails></ProductDEtails></PrivateRoute> ,
+            element: <PrivateRoute><ProductDetails></ProductDetails></PrivateRoute> ,
         },
         {
             path: '/importedProduct/:id',

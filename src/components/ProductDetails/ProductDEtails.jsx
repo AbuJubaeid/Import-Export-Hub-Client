@@ -18,7 +18,7 @@ const ProductDetails = () => {
   );
 
   useEffect(() => {
-    fetch(`https://import-export-hub-server.vercel.app/products/${id}`, {
+    fetch(`http://localhost:3000/products/${id}`, {
       headers: { authorization: `Bearer ${user.accessToken}` },
     })
       .then((res) => res.json())
@@ -36,15 +36,27 @@ const ProductDetails = () => {
       return;
     }
 
+
     const importDetail = {
-      ...product,
+       created_by: product.created_by,
+       product_image: product.product_image,
+       product_name: product.product_name,
+       price: product.price,
+       origin_country: product.origin_country,
+       rating: product.rating,
+       available_quantity: product.available_quantity,
+       upload_date: new Date(),
+       description: product.description,
       imported_by: user.email,
       imported_quantity: parseInt(importQty),
     };
 
-    fetch("https://import-export-hub-server.vercel.app/my-imports", {
+    fetch("http://localhost:3000/my-imports", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { 
+        "Content-Type": "application/json",
+         authorization: `Bearer ${user.accessToken}` 
+       },
       body: JSON.stringify(importDetail),
     })
       .then((res) => res.json())

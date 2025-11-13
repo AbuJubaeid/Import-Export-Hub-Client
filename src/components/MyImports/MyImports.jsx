@@ -9,7 +9,7 @@ const MyImports = () => {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    fetch(`https://import-export-hub-server.vercel.app/my-imports?email=${user.email}`, {
+    fetch(`http://localhost:3000/my-imports?email=${user.email}`, {
       headers: {
         authorization: `Bearer ${user.accessToken}`,
       },
@@ -37,7 +37,7 @@ const MyImports = () => {
       confirmButtonText: "Yes, remove it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`https://import-export-hub-server.vercel.app/myImports/${id}`, {
+        fetch(`http://localhost:3000/my-imports/${id}`, {
           method: "DELETE",
           headers: { "Content-Type": "application/json" },
         })
