@@ -24,7 +24,7 @@ const Home = () => {
     <div className="carousel w-full h-64 sm:h-72 md:h-80 lg:h-96 rounded-2xl overflow-hidden shadow-lg">
       <div id="slide1" className="carousel-item relative w-full">
         <img
-          src="https://img.daisyui.com/images/stock/photo-1625726411847-8cbb60cc71e6.webp"
+          src="https://i.ibb.co.com/KjzWgMT2/caro-1.jpg"
           className="w-full h-full object-cover"
         />
         <div className="absolute left-2 sm:left-5 right-2 sm:right-5 top-1/2 flex -translate-y-1/2 transform justify-between">
@@ -35,7 +35,7 @@ const Home = () => {
 
       <div id="slide2" className="carousel-item relative w-full">
         <img
-          src="https://img.daisyui.com/images/stock/photo-1609621838510-5ad474b7d25d.webp"
+          src="https://i.ibb.co.com/Dfw7ht8k/caro-2.jpg"
           className="w-full h-full object-cover"
         />
         <div className="absolute left-2 sm:left-5 right-2 sm:right-5 top-1/2 flex -translate-y-1/2 transform justify-between">
@@ -46,7 +46,7 @@ const Home = () => {
 
       <div id="slide3" className="carousel-item relative w-full">
         <img
-          src="https://img.daisyui.com/images/stock/photo-1414694762283-acccc27bca85.webp"
+          src="https://i.ibb.co.com/Mx1BpKNq/caro-3.jpg"
           className="w-full h-full object-cover"
         />
         <div className="absolute left-2 sm:left-5 right-2 sm:right-5 top-1/2 flex -translate-y-1/2 transform justify-between">
@@ -57,7 +57,7 @@ const Home = () => {
 
       <div id="slide4" className="carousel-item relative w-full">
         <img
-          src="https://img.daisyui.com/images/stock/photo-1665553365602-b2fb8e5d1707.webp"
+          src="https://i.ibb.co.com/wFLT6ZKH/caro-4.jpg"
           className="w-full h-full object-cover"
         />
         <div className="absolute left-2 sm:left-5 right-2 sm:right-5 top-1/2 flex -translate-y-1/2 transform justify-between">
@@ -72,7 +72,7 @@ const Home = () => {
 
       {/* most recent products */}
       <div className="mt-10 px-4 sm:px-6 lg:px-8">
-  <h2 className="text-3xl font-bold text-gray-800 mb-8 text-center sm:text-left">
+  <h2 className="text-3xl text-center lg:text-center font-bold text-gray-800 mb-8 sm:text-left">
     Most Recent Products
   </h2>
 
