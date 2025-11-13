@@ -1,5 +1,6 @@
 import { useContext, useRef, useState } from "react";
 import toast from "react-hot-toast";
+import { FcGoogle } from "react-icons/fc";
 import { IoIosEyeOff } from "react-icons/io";
 import { RxEyeOpen } from "react-icons/rx";
 import { Link, useNavigate } from "react-router";
@@ -7,164 +8,151 @@ import { AuthContext } from "../../AuthContext/AuthContext";
 
 const Signin = () => {
   const [show, setShow] = useState(false);
-  const { signInWithEmailAndPasswordFunc, signInWithPopupFunc, sendPasswordResetEmailFunc, setLoading } = useContext(AuthContext);
+  const { signInWithEmailAndPasswordFunc, signInWithPopupFunc, sendPasswordResetEmailFunc, setLoading } =
+    useContext(AuthContext);
   const navigate = useNavigate();
-   const emailRef = useRef(null)
+  const emailRef = useRef(null);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     const email = e.target.email.value;
     const password = e.target.password.value;
 
-
     signInWithEmailAndPasswordFunc(email, password)
       .then((result) => {
-        console.log(result);
+        console.log(result)
         navigate("/");
-        setLoading(false)
+        setLoading(false);
         toast.success("Login successful");
       })
       .catch((error) => {
         console.log(error);
-        // toast.error(error.message)
-        if (error.code === "auth/email-already-in-use") {
-          toast.error("User already exists in the database");
-        } else if (e.code === "auth/weak-password") {
-          toast.error("use atleast 6 digit password");
-        } else if (e.code === "auth/invalid-email") {
-          toast.error("Invalid email format. Please check your email.");
-        } else if (e.code === "auth/user-not-found") {
-          toast.error("User not found. Please sign up first.");
-        } else if (e.code === "auth/wrong-password") {
-          toast.error("Wrong password. Please try again.");
-        } else if (e.code === "auth/user-disabled") {
-          toast.error("This user account has been disabled.");
-        } else if (e.code === "auth/too-many-requests") {
-          toast.error("Too many attempts. Please try again later.");
-        } else if (e.code === "auth/operation-not-allowed") {
-          toast.error("Operation not allowed. Please contact support.");
-        } else if (e.code === "auth/network-request-failed") {
-          toast.error("Network error. Please check your connection.");
-        } else {
-          toast.error(e.message || "An unexpected error occurred.");
-        }
+        toast.error(error.message || "An unexpected error occurred");
       });
 
     e.target.reset();
   };
 
-  const handleGoogleBtn =()=>{
+  const handleGoogleBtn = () => {
     signInWithPopupFunc()
-    .then(result=>{
+      .then((result) => {
         console.log(result)
         navigate("/");
-        setLoading(false)
+        setLoading(false);
         toast.success("Login successful");
-    })
-    .catch((error) => {
-        console.log(error);
+      })
+      .catch((error) => {
         toast.error(error.message);
       });
-  }
+  };
 
-  const handleForgetButton =()=>{
-    const email = emailRef.current.value
-
+  const handleForgetButton = () => {
+    const email = emailRef.current.value;
+    if (!email) {
+      toast.error("Please enter your email first");
+      return;
+    }
     sendPasswordResetEmailFunc(email)
-    .then(result=>{
-        console.log(result)
-        setLoading(false)
-        toast("Check your email to reset password")
-    })
-
-  }
-
+      .then(() => {
+        setLoading(false);
+        toast("Check your email to reset password");
+      })
+      .catch((err) => console.log(err));
+  };
 
   return (
-    <div className="hero bg-base-200 min-h-screen mt-10 mb-10">
-      <div className="hero-content flex-col lg:flex-row-reverse">
+    <section className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-blue-100 py-10 px-4">
+      <div className="max-w-4xl w-full grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+        {/* Left: Heading & Info */}
         <div className="text-center lg:text-left">
-          <h1 className="text-5xl font-bold">Login now!</h1>
+          <h1 className="text-4xl sm:text-5xl font-bold text-gray-800 mb-6">
+            Welcome Back!
+          </h1>
+          <p className="text-gray-600 sm:text-lg">
+            Login to your account and manage your imports & exports seamlessly.
+          </p>
         </div>
-        <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl relative">
-          <form onSubmit={handleSubmit} className="card-body">
-            <fieldset className="fieldset">
-              {/* email */}
-              <label className="label">Email</label>
+
+        {/* Right: Form Card */}
+        <div className="bg-white rounded-3xl shadow-2xl p-8 relative">
+          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+            {/* Email */}
+            <div className="flex flex-col">
+              <label className="text-gray-700 font-medium mb-1">Email</label>
               <input
                 type="email"
                 name="email"
                 ref={emailRef}
-                className="input"
                 placeholder="Enter your email"
+                className="border border-gray-300 rounded-xl px-4 py-2 focus:ring-2 focus:ring-blue-400 focus:outline-none"
+                required
               />
-              {/* password */}
-              <label className="label">Password</label>
-              <div className="relative">
-                <input
-                  type={show ? "text" : "password"}
-                  name="password"
-                  className="input"
-                  placeholder="Enter your password"
-                />
-                <span
-                  onClick={() => setShow(!show)}
-                  className="absolute right-5 top-1/2 -translate-y-1/2 cursor-pointer text-gray-500 hover:text-gray-700 z-50"
-                >
-                  {show ? <RxEyeOpen /> : <IoIosEyeOff />}
-                </span>
-              </div>
-              <div>
-                <button onClick={handleForgetButton} type="button" className="link link-hover">Forgot password?</button>
-              </div>
-              <button className="btn btn-neutral mt-4">Login</button>
-            </fieldset>
-          </form>
-          {/* Google */}
-          <button onClick={handleGoogleBtn} className="btn mx-6 mb-4 bg-white text-black border-[#e5e5e5]">
-            <svg
-              aria-label="Google logo"
-              width="16"
-              height="16"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 512 512"
+            </div>
+
+            {/* Password */}
+            <div className="flex flex-col relative">
+              <label className="text-gray-700 font-medium mb-1">Password</label>
+              <input
+                type={show ? "text" : "password"}
+                name="password"
+                placeholder="Enter your password"
+                className="border border-gray-300 rounded-xl px-4 py-2 focus:ring-2 focus:ring-blue-400 focus:outline-none"
+                required
+              />
+              <span
+                onClick={() => setShow(!show)}
+                className="absolute right-4 top-2/3 -translate-y-1/2 cursor-pointer text-gray-500 hover:text-gray-700"
+              >
+                {show ? <RxEyeOpen size={20} /> : <IoIosEyeOff size={20} />}
+              </span>
+            </div>
+
+            {/* Forgot password */}
+            <button
+              type="button"
+              onClick={handleForgetButton}
+              className="text-right text-sm text-blue-600 hover:underline"
             >
-              <g>
-                <path d="m0 0H512V512H0" fill="#fff"></path>
-                <path
-                  fill="#34a853"
-                  d="M153 292c30 82 118 95 171 60h62v48A192 192 0 0190 341"
-                ></path>
-                <path
-                  fill="#4285f4"
-                  d="m386 400a140 175 0 0053-179H260v74h102q-7 37-38 57"
-                ></path>
-                <path
-                  fill="#fbbc02"
-                  d="m90 341a208 200 0 010-171l63 49q-12 37 0 73"
-                ></path>
-                <path
-                  fill="#ea4335"
-                  d="m153 219c22-69 116-109 179-50l55-54c-78-75-230-72-297 55"
-                ></path>
-              </g>
-            </svg>
+              Forgot password?
+            </button>
+
+            {/* Login button */}
+            <button className="bg-blue-600 text-white py-2 rounded-xl font-semibold hover:bg-blue-700 transition duration-200">
+              Login
+            </button>
+          </form>
+
+          {/* Divider */}
+          <div className="flex items-center my-4">
+            <hr className="flex-1 border-gray-300" />
+            <span className="mx-2 text-gray-400">OR</span>
+            <hr className="flex-1 border-gray-300" />
+          </div>
+
+          {/* Google Login */}
+          <button
+            onClick={handleGoogleBtn}
+            className="flex items-center justify-center gap-2 w-full border border-gray-300 rounded-xl py-2 font-medium hover:bg-gray-100 transition"
+          >
+            <FcGoogle />
             Login with Google
           </button>
-          <p className="text-center mb-4 text-gray-600">
+
+          {/* Sign Up Link */}
+          <p className="text-center mt-4 text-gray-600">
             Don't have an account?{" "}
             <Link
-              className="text-blue-600 font-semibold hover:underline"
               to="/signup"
+              className="text-blue-600 font-semibold hover:underline"
             >
               Sign Up
             </Link>
           </p>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 
 export default Signin;
+

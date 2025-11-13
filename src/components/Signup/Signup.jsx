@@ -1,5 +1,6 @@
 import { useContext, useState } from "react";
 import toast from "react-hot-toast";
+import { FcGoogle } from "react-icons/fc";
 import { IoIosEyeOff } from "react-icons/io";
 import { RxEyeOpen } from "react-icons/rx";
 import { Link, useNavigate } from "react-router";
@@ -7,8 +8,14 @@ import { AuthContext } from "../../AuthContext/AuthContext";
 
 const Signup = () => {
   const [show, setShow] = useState(false);
-  const { createUserWithEmailAndPasswordFunc, updateProfileFunc, setLoading, signOutFunc, setUser, signInWithPopupFunc } =
-    useContext(AuthContext);
+  const {
+    createUserWithEmailAndPasswordFunc,
+    updateProfileFunc,
+    setLoading,
+    signOutFunc,
+    setUser,
+    signInWithPopupFunc,
+  } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
@@ -18,181 +25,153 @@ const Signup = () => {
     const email = e.target.email.value;
     const password = e.target.password.value;
 
-    const newUser = { displayName, email, photoURL, password };
-
-    console.log(newUser);
-
     const regExp =
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#^()\-_=+])[A-Za-z\d@$!%*?&#^()\-_=+]{8,}$/;
 
     if (!regExp.test(password)) {
       toast.error(
-        "Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character"
+        "Password must be at least 8 characters, include uppercase, lowercase, number, and special character."
       );
       return;
     }
 
     createUserWithEmailAndPasswordFunc(email, password)
       .then((result) => {
-        console.log(result);
-        updateProfileFunc(displayName, photoURL).then((result) => {
+        console.log(result)
+        updateProfileFunc(displayName, photoURL)
+          .then(() => {
             signOutFunc()
-        .then(() => {
-            console.log(result);
-          setLoading(false)
-          toast.success("Registration successful");
-          navigate("/"); 
-          setUser(null);
-        })
-        .catch((error) => {
-          toast.error(error.message);
-        });
-          
-        })
-        .catch(error=>{
-            toast.error(error.message)
-        })
+              .then(() => {
+                setLoading(false);
+                toast.success("Registration successful");
+                navigate("/");
+                setUser(null);
+              })
+              .catch((error) => toast.error(error.message));
+          })
+          .catch((error) => toast.error(error.message));
       })
       .catch((error) => {
-        console.log(error);
-        // toast.error(error.message)
-        if (error.code === "auth/email-already-in-use") {
-          toast.error("User already exists in the database");
-        } else if (e.code === "auth/weak-password") {
-          toast.error("use atleast 6 digit password");
-        } else if (e.code === "auth/invalid-email") {
-          toast.error("Invalid email format. Please check your email.");
-        } else if (e.code === "auth/user-not-found") {
-          toast.error("User not found. Please sign up first.");
-        } else if (e.code === "auth/wrong-password") {
-          toast.error("Wrong password. Please try again.");
-        } else if (e.code === "auth/user-disabled") {
-          toast.error("This user account has been disabled.");
-        } else if (e.code === "auth/too-many-requests") {
-          toast.error("Too many attempts. Please try again later.");
-        } else if (e.code === "auth/operation-not-allowed") {
-          toast.error("Operation not allowed. Please contact support.");
-        } else if (e.code === "auth/network-request-failed") {
-          toast.error("Network error. Please check your connection.");
-        } else {
-          toast.error(e.message || "An unexpected error occurred.");
-        }
+        toast.error(error.message || "Registration failed");
       });
 
     e.target.reset();
   };
 
-  const handleGoogleBtn =()=>{
+  const handleGoogleBtn = () => {
     signInWithPopupFunc()
-    .then(result=>{
-        console.log(result)
+      .then(() => {
         navigate("/");
-        setLoading(false)
+        setLoading(false);
         toast.success("Login successful");
-    })
-    .catch((error) => {
-        console.log(error);
-        toast.error(error.message);
-      });
-  }
+      })
+      .catch((error) => toast.error(error.message));
+  };
 
   return (
-    <div className="hero bg-base-200 min-h-screen mt-10 mb-10">
-      <div className="hero-content flex-col lg:flex-row-reverse">
+    <section className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-50 via-white to-blue-50 px-4">
+      <div className="max-w-5xl w-full grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+        {/* Left: Heading */}
         <div className="text-center lg:text-left">
-          <h1 className="text-5xl font-bold">Register now!</h1>
+          <h1 className="text-4xl sm:text-5xl font-bold text-gray-800 mb-4">
+            Create Your Account
+          </h1>
+          <p className="text-gray-600 sm:text-lg">
+            Join us today! Sign up to manage your products and imports seamlessly.
+          </p>
         </div>
-        <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl relative">
-          <form onSubmit={handleSubmit} className="card-body">
-            <fieldset className="fieldset">
-              {/* name */}
-              <label className="label">Name</label>
+
+        {/* Right: Form Card */}
+        <div className="bg-white rounded-3xl shadow-2xl p-8 relative">
+          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+            {/* Name */}
+            <div className="flex flex-col">
+              <label className="text-gray-700 font-medium mb-1">Name</label>
               <input
-                type="name"
+                type="text"
                 name="name"
-                className="input"
                 placeholder="Enter your name"
+                className="border border-gray-300 rounded-xl px-4 py-2 focus:ring-2 focus:ring-purple-400 focus:outline-none"
+                required
               />
-              {/* email */}
-              <label className="label">Email</label>
+            </div>
+
+            {/* Email */}
+            <div className="flex flex-col">
+              <label className="text-gray-700 font-medium mb-1">Email</label>
               <input
                 type="email"
                 name="email"
-                className="input"
                 placeholder="Enter your email"
+                className="border border-gray-300 rounded-xl px-4 py-2 focus:ring-2 focus:ring-purple-400 focus:outline-none"
+                required
               />
-              {/* photoURL */}
-              <label className="label">Photo URL</label>
+            </div>
+
+            {/* Photo URL */}
+            <div className="flex flex-col">
+              <label className="text-gray-700 font-medium mb-1">Photo URL</label>
               <input
                 type="text"
                 name="photoURL"
-                className="input"
-                placeholder="Enter your photoURL"
+                placeholder="Enter your photo URL"
+                className="border border-gray-300 rounded-xl px-4 py-2 focus:ring-2 focus:ring-purple-400 focus:outline-none"
               />
-              {/* password */}
-              <label className="label">Password</label>
-              <div className="relative">
-                <input
-                  type={show ? "text" : "password"}
-                  name="password"
-                  className="input"
-                  placeholder="Enter your password"
-                />
-                <span
-                  onClick={() => setShow(!show)}
-                  className="absolute right-5 top-1/2 -translate-y-1/2 cursor-pointer text-gray-500 hover:text-gray-700 z-50"
-                >
-                  {show ? <RxEyeOpen /> : <IoIosEyeOff />}
-                </span>
-              </div>
-              <button className="btn btn-neutral mt-4">Register</button>
-            </fieldset>
+            </div>
+
+            {/* Password */}
+            <div className="flex flex-col relative">
+              <label className="text-gray-700 font-medium mb-1">Password</label>
+              <input
+                type={show ? "text" : "password"}
+                name="password"
+                placeholder="Enter your password"
+                className="border border-gray-300 rounded-xl px-4 py-2 focus:ring-2 focus:ring-purple-400 focus:outline-none"
+                required
+              />
+              <span
+                onClick={() => setShow(!show)}
+                className="absolute right-4 top-2/3 -translate-y-1/2 cursor-pointer text-gray-500 hover:text-gray-700"
+              >
+                {show ? <RxEyeOpen size={20} /> : <IoIosEyeOff size={20} />}
+              </span>
+            </div>
+
+            {/* Register Button */}
+            <button className="bg-purple-600 text-white py-2 rounded-xl font-semibold hover:bg-purple-700 transition duration-200">
+              Register
+            </button>
           </form>
-          
-          {/* google login */}
-          <button onClick={handleGoogleBtn} className="btn mx-6 mb-4 bg-white text-black border-[#e5e5e5]">
-            <svg
-              aria-label="Google logo"
-              width="16"
-              height="16"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 512 512"
-            >
-              <g>
-                <path d="m0 0H512V512H0" fill="#fff"></path>
-                <path
-                  fill="#34a853"
-                  d="M153 292c30 82 118 95 171 60h62v48A192 192 0 0190 341"
-                ></path>
-                <path
-                  fill="#4285f4"
-                  d="m386 400a140 175 0 0053-179H260v74h102q-7 37-38 57"
-                ></path>
-                <path
-                  fill="#fbbc02"
-                  d="m90 341a208 200 0 010-171l63 49q-12 37 0 73"
-                ></path>
-                <path
-                  fill="#ea4335"
-                  d="m153 219c22-69 116-109 179-50l55-54c-78-75-230-72-297 55"
-                ></path>
-              </g>
-            </svg>
-            Login with Google
+
+          {/* Divider */}
+          <div className="flex items-center my-4">
+            <hr className="flex-1 border-gray-300" />
+            <span className="mx-2 text-gray-400">OR</span>
+            <hr className="flex-1 border-gray-300" />
+          </div>
+
+          {/* Google Login */}
+          <button
+            onClick={handleGoogleBtn}
+            className="flex items-center justify-center gap-2 w-full border border-gray-300 rounded-xl py-2 font-medium hover:bg-gray-100 transition"
+          >
+            <FcGoogle />
+            Sign up with Google
           </button>
 
-          <p className="text-center mb-2 text-gray-600">
+          {/* Login Link */}
+          <p className="text-center mt-4 text-gray-600">
             Already have an account?{" "}
             <Link
-              className="text-blue-600 font-semibold hover:underline"
               to="/signin"
+              className="text-purple-600 font-semibold hover:underline"
             >
               Login
             </Link>
           </p>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 
