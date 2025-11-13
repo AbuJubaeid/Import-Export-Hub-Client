@@ -9,16 +9,21 @@ const ImportProductDetails = () => {
   const [loading, setLoading] = useState(true);
   const { user } = useContext(AuthContext);
 
+  console.log(user)
+  console.log(product)
+  console.log(id)
+
   useTitle(
     product?.product_name ? `Product: ${product.product_name}` : "Loading..."
   );
 
   useEffect(() => {
-    fetch(`https://import-export-hub-server.vercel.app/myImports/${id}`, {
+    fetch(`https://import-export-hub-server.vercel.app/products/${id}`, {
       headers: { authorization: `Bearer ${user.accessToken}` },
     })
-      .then((res) => res.json())
-      .then((data) => {
+      .then(res => res.json())
+      .then(data => {
+        console.log(data)
         setProduct(data);
         setLoading(false);
       });
